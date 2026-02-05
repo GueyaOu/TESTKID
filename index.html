@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vocabulary Match | Unit 5</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Start Screen Overlay -->
+        <div id="start-screen" class="start-screen" style="display: none !important;">
+            <div class="start-content">
+                <h1 class="hero-title">Vocabulary<br>Mastery</h1>
+                <p class="hero-subtitle">Unit 5: Identity & Personality</p>
+                <div class="hero-stats">
+                    <span>23 Pairs</span>
+                    <span>•</span>
+                    <span>Beat the Clock</span>
+                </div>
+                <button id="start-btn" class="play-btn">Play Now</button>
+            </div>
+        </div>
+
+        <canvas id="confetti"></canvas>
+
+        <header>
+            <h1>Vocabulary Match</h1>
+            <div class="stats">
+                <div class="stat-box">
+                    <span class="label">Pairs</span>
+                    <span id="pairs-count">0/23</span>
+                </div>
+                <div class="stat-box">
+                    <span class="label">Time</span>
+                    <span id="timer">00:00</span>
+                </div>
+                <div class="stat-box">
+                    <span class="label">Moves</span>
+                    <span id="moves">0</span>
+                </div>
+                <div class="stat-box streak-box">
+                    <span class="label">Streak</span>
+                    <span id="streak">0</span>
+                </div>
+            </div>
+            <div class="controls">
+                <button id="hint-btn" class="control-btn" title="Reveal a pair briefly (5 max)">
+                    <span class="hint-icon">💡</span>
+                    <span id="hints-left">5</span>
+                </button>
+                <button id="sound-btn" class="control-btn" title="Toggle sound">
+                    <span id="sound-icon">🔊</span>
+                </button>
+            </div>
+        </header>
+
+        <main>
+            <div class="game-board" id="game-board">
+                <!-- Cards will be generated here -->
+            </div>
+        </main>
+
+        <div id="modal" class="modal hidden">
+            <div class="modal-content">
+                <h2>Outstanding!</h2>
+                <div id="star-rating" class="star-rating"></div>
+                <p>You matched all definitions!</p>
+                <div class="final-stats">
+                    <p>Time: <span id="final-time">--:--</span></p>
+                    <p>Moves: <span id="final-moves">--</span></p>
+                    <p>Best Streak: <span id="final-streak">--</span></p>
+                </div>
+                <div id="best-score" class="best-score"></div>
+                <button id="restart-btn" class="restart-btn">Play Again</button>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+
+</html>
