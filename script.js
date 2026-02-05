@@ -60,6 +60,11 @@ const soundBtn = document.getElementById('sound-btn');
 const soundIcon = document.getElementById('sound-icon');
 const starRatingEl = document.getElementById('star-rating');
 const bestScoreEl = document.getElementById('best-score');
+const reviewBtn = document.getElementById('review-btn');
+const reviewModal = document.getElementById('review-modal');
+const closeReviewBtn = document.getElementById('close-review');
+const vocabListEl = document.getElementById('vocab-list');
+const searchInput = document.getElementById('search-input');
 
 // --- Sound Effects (Web Audio API) ---
 const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
@@ -454,11 +459,71 @@ function endGame() {
     }, 1000);
 }
 
+// --- Review Logic ---
+function openReview() {
+    renderVocabList(vocabData);
+    reviewModal.classList.remove('hidden');
+    searchInput.value = '';
+    searchInput.focus();
+}
+
+function closeReview() {
+    reviewModal.classList.add('hidden');
+}
+
+function renderVocabList(data) {
+    vocabListEl.innerHTML = '';
+
+    // Sort alphabetically
+    const sorted = [...data].sort((a, b) => a.word.localeCompare(b.word));
+
+    sorted.forEach((item, index) => {
+        const vocabItem = document.createElement('div');
+        vocabItem.className = 'vocab-item';
+        vocabItem.style.animationDelay = `${index * 0.03}s`;
+
+        vocabItem.innerHTML = `
+            <div class="vocab-word">${item.word}</div>
+            <div class="vocab-def">${item.def}</div>
+        `;
+
+        vocabListEl.appendChild(vocabItem);
+    });
+
+    if (data.length === 0) {
+        vocabListEl.innerHTML = '<div class="no-results">No words found</div>';
+    }
+}
+
+function filterVocab(searchTerm) {
+    const term = searchTerm.toLowerCase().trim();
+
+    if (!term) {
+        renderVocabList(vocabData);
+        return;
+    }
+
+    const filtered = vocabData.filter(item =>
+        item.word.toLowerCase().includes(term) ||
+        item.def.toLowerCase().includes(term)
+    );
+
+    renderVocabList(filtered);
+}
+
 // Event Listeners
 startBtn.addEventListener('click', startGame);
 restartBtn.addEventListener('click', initGame);
 hintBtn.addEventListener('click', useHint);
 soundBtn.addEventListener('click', toggleSound);
+reviewBtn.addEventListener('click', openReview);
+closeReviewBtn.addEventListener('click', closeReview);
+searchInput.addEventListener('input', (e) => filterVocab(e.target.value));
+
+// Close review modal on outside click
+reviewModal.addEventListener('click', (e) => {
+    if (e.target === reviewModal) closeReview();
+});
 
 // Auto-start game
 startGame();
